@@ -1,34 +1,21 @@
-
-
-//Skapa TypeScript-interface för kursinformation
-interface CourseInfo {
-    code: string;
-    name: string;
-    progression: 'A' | 'B' | 'C';
-    syllabus: string;
-}
-
 //Hantera localStorage för kursinformation
-function saveCourses(courses: CourseInfo[]) {
+function saveCourses(courses) {
     localStorage.setItem('courses', JSON.stringify(courses));
 }
-
-function loadCourses(): CourseInfo[] {
-    const coursesJson = localStorage.getItem('courses');
+function loadCourses() {
+    var coursesJson = localStorage.getItem('courses');
     return coursesJson ? JSON.parse(coursesJson) : [];
 }
-
 // Funktioner för kurs-hantering
-function addCourse(course: CourseInfo) {
-    const courses = loadCourses();
+function addCourse(course) {
+    var courses = loadCourses();
     courses.push(course);
     saveCourses(courses);
 }
-
-function updateCourse(code: string, updatedCourse: CourseInfo) {
-    const courses = loadCourses();
-    let found = false;
-    for (let i = 0; i < courses.length; i++) {
+function updateCourse(code, updatedCourse) {
+    var courses = loadCourses();
+    var found = false;
+    for (var i = 0; i < courses.length; i++) {
         if (courses[i].code === code) {
             courses[i] = updatedCourse;
             found = true;
@@ -39,18 +26,15 @@ function updateCourse(code: string, updatedCourse: CourseInfo) {
         saveCourses(courses);
     }
 }
-
-function getCourse(code: string): CourseInfo | undefined {
-    const courses = loadCourses();
-    for (let i = 0; i < courses.length; i++) {
+function getCourse(code) {
+    var courses = loadCourses();
+    for (var i = 0; i < courses.length; i++) {
         if (courses[i].code === code) {
             return courses[i];
         }
     }
     return undefined; // Course not found
 }
-
-
 /*function renderCourses() {
     const coursesList = document.getElementById('courses-list');
     const courses = loadCourses();

@@ -6,7 +6,7 @@
   "name": "moment1.typescript",
   "version": "1.0.0",
   "description": "Moment1",
-  "main": "index.js",
+  "main": "app.js",
   "devDependencies": {
     "gulp": "^3.9.1"
   },
