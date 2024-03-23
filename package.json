@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "gulp-cli": "^2.3.0",
+    "typescript": "^5.4.3"
+  },
+  "name": "moment1.typescript",
+  "version": "1.0.0",
+  "description": "Moment1",
+  "main": "index.js",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dania",
+  "license": "ISC"
+}
