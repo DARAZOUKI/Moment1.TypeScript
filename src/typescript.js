@@ -1,3 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var node_localstorage_1 = require("node-localstorage");
+// Define the storage directory (where data will be stored)
+var localStorage = new node_localstorage_1.LocalStorage('./storage');
+// Now you can use localStorage methods similarly to the browser
+localStorage.setItem('key', 'value');
+var item = localStorage.getItem('key');
+console.log(item); // Output: value
 // Define CourseManager class
 var CourseManager = /** @class */ (function () {
     function CourseManager() {

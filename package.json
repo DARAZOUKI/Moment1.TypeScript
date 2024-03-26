@@ -2,21 +2,27 @@
   "name": "moment1.typescript",
   "version": "1.0.0",
   "description": "Moment1",
-    "scripts": {
-    
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel src/index.html --no-cache --no-source-maps",
+    "build": "parcel build src/index.html --no-cache --no-source-maps",
+    "sass": "sass --watch scss/main.scss:main.css",
+    "transpile-js": "babel src -d dist --presets @babel/preset-env",
+    "minify-js": " terser dist/javascript.js -o dist/javascript.min.js",
+    "minify-html": "html-minifier --collapse-whitespace --remove-comments --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true --input-dir src --output-dir dist"
   },
   "author": "Dania",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.12.0",
     "core-js": "^3.36.1",
+    "events": "^3.3.0",
+    "gulp": "^4.0.2",
     "gulp-cli": "^2.3.0",
     "localStorage": "^1.0.4",
     "node-localstorage": "^3.0.5",
+    "parcel": "^2.12.0",
+    "path-browserify": "^1.0.1",
     "typescript": "^5.4.3"
-  },
-  "devDependencies": {
-    "@parcel/transformer-sass": "^2.12.0",
-    "gulp": "^4.0.2",
-    "parcel": "^2.12.0"
   }
 }

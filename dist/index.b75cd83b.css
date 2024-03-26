@@ -210,16 +210,6 @@ header nav .menu-btn, header nav .bars {
   }
 }
 
-footer {
-  color: #fff;
-  text-align: center;
-  background-color: #007bff;
-  border-top: 2px solid #3395ff;
-  width: 100%;
-  padding: 10px;
-  bottom: 0;
-}
-
 body {
   background-color: #f4f4f4;
   margin: 0;

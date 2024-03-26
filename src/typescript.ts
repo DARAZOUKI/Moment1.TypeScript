@@ -1,3 +1,13 @@
+import { LocalStorage } from 'node-localstorage';
+
+// Define the storage directory (where data will be stored)
+const localStorage = new LocalStorage('./storage');
+
+// Now you can use localStorage methods similarly to the browser
+localStorage.setItem('key', 'value');
+const item = localStorage.getItem('key');
+console.log(item); // Output: value
+
 
     interface CourseInfo {
       code: string;
