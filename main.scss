@@ -1,10 +1,7 @@
 
-@import '_variables';
+@import '_variables.scss';
 // Header styles
-@import '_header';
-
-// Footer styles
-@import '_footer';
+@import '_header.scss';
 
 body {
   font-family: Arial, sans-serif;

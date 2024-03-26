@@ -2,14 +2,8 @@
   "name": "moment1.typescript",
   "version": "1.0.0",
   "description": "Moment1",
-  "source": "src/index.html",
-  "scripts": {
-    "start": "parcel src/index.html --no-cache --no-source-maps",
-    "build": "parcel build src/index.html --no-cache --no-source-maps",
-    "sass": "sass --watch scss/main.scss:main.css",
-    "transpile-js": "babel src -d dist --presets @babel/preset-env",
-    "minify-js": " terser dist/javascript.js -o dist/javascript.min.js",
-    "minify-html": "html-minifier --collapse-whitespace --remove-comments --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true --input-dir src --output-dir dist"
+    "scripts": {
+    
   },
   "author": "Dania",
   "license": "ISC",
