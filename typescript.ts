@@ -6,87 +6,70 @@
       syllabus: string;
     }
   
-     class CourseManager {
-    private courses: CourseInfo[] = [];
-  
+     // Define CourseManager class
+class CourseManager {
+    private courses: CourseInfo[];
+
     constructor() {
-      this.loadCourses();
-      this.renderCourses();
+        this.courses = [];
+        this.loadCoursesFromLocalStorage();
+        this.renderCourses();
     }
-  
-    private loadCourses() {
-      // Load courses from localStorage or server here
-      // For demonstration, adding dummy data
-      this.courses = [
-        { code: 'CS101', name: 'Introduction to Computer Science', progression: 'A', syllabus: 'https://example.com/cs101-syllabus' },
-        { code: 'ENG202', name: 'English Literature', progression: 'B', syllabus: 'https://example.com/eng202-syllabus' }
-      ];
-    }
-    addCourse(newCourse: CourseInfo) {
-        // Check if the course code already exists
-        let existingCourseIndex = -1;
-        for (let i = 0; i < this.courses.length; i++) {
-            if (this.courses[i].code === newCourse.code) {
-                existingCourseIndex = i;
-                break;
-            }
+    private loadCoursesFromLocalStorage() {
+        const storedCourses = localStorage.getItem('courses');
+        if (storedCourses) {
+            this.courses = JSON.parse(storedCourses);
         }
+    }
+    private saveCoursesToLocalStorage() {
+        localStorage.setItem('courses', JSON.stringify(this.courses));
+    }
+   
 
-        if (existingCourseIndex === -1) {
-            // Course code doesn't exist, add the new course
-            this.courses.push(newCourse);
-            // Render the updated courses
-            this.renderCourses();
-            // Optionally, update localStorage here
-            console.log('Course added:', newCourse);
-        } else {
-            console.error('Course with code', newCourse.code, 'already exists.');
-        }
+    private addCourse(course: CourseInfo) {
+        this.courses.push(course);
+        this.saveCoursesToLocalStorage();
+        this.renderCourse(course);
     }
-
-    private updateCourse(course: CourseInfo, updatedInfo: string) {
-        // Parse the updated course information
-        const [code, name, progression, syllabus] = updatedInfo.split(':').map(part => part.trim());
-      
-        // Find the index of the course with the specified code
-        let index = -1;
-        for (let i = 0; i < this.courses.length; i++) {
-            if (this.courses[i].code === code) {
-                index = i;
-                break;
-            }
-        }
-      
-        // If the course with the specified code is found, update its properties
-        if (index !== -1) {
-            this.courses[index].code = code;
-            this.courses[index].name = name;
-            this.courses[index].progression = progression as 'A' | 'B' | 'C';
-            this.courses[index].syllabus = syllabus;
-      
-            // Update localStorage or send update request to server here
-            console.log('Course updated:', this.courses[index]);
-        } else {
-            console.error('Course with code', code, 'not found.');
+    private renderCourse(course: CourseInfo) {
+        const kursInfo = document.getElementById('course-list');
+        if (kursInfo) {
+            const courseElement = document.createElement('div');
+            courseElement.classList.add('course');
+            courseElement.innerHTML = `
+                <p><strong>Kurskod:</strong> ${course.code}</p>
+                <p><strong>Kursnamn:</strong> ${course.name}</p>
+                <p><strong>Progression:</strong> ${course.progression}</p>
+                <p><strong>Webbsida:</strong> <a href="${course.syllabus}" target="_blank">${course.syllabus}</a></p>
+            `;
+            kursInfo.appendChild(courseElement);
         }
     }
     private renderCourses() {
-        console.log("Courses:");
         this.courses.forEach(course => {
-            console.log(`Code: ${course.code}, Name: ${course.name}, Progression: ${course.progression}, Syllabus: ${course.syllabus}`);
+            this.renderCourse(course);
         });
+    }
+
+    private clearCourses() {
+        this.courses = [];
+        localStorage.removeItem('courses');
+        const kursInfo = document.getElementById('course-list');
+        if (kursInfo) {
+            kursInfo.innerHTML = '';
+        }
     }
     
     
     
     
-     // Optional functionality: Sort courses by code
+     // Sort courses by code
      sortCoursesByCode() {
         this.courses.sort((a, b) => a.code.localeCompare(b.code));
         this.renderCourses();
       }
     
-      // Optional functionality: Filter courses by progression
+      // Filter courses by progression
       filterCoursesByProgression(progression: 'A' | 'B' | 'C') {
         const filteredCourses = this.courses.filter(course => course.progression === progression);
         this.renderFilteredCourses(filteredCourses);
@@ -120,10 +103,41 @@
             console.log('Course not found:', code);
         }
     }
-}
+
   
-  const courseManager = new CourseManager();
-  // Usage of optional functionalities
-  courseManager.sortCoursesByCode(); // Sort courses by code
-  courseManager.filterCoursesByProgression('A'); // Filter courses by progression 'A'
-  courseManager.deleteCourseByCode('CS101'); // Delete course with code 'CS101'
+/*if (typeof window !== 'undefined') {
+    const courseManager = new CourseManager();
+*/
+
+// Add event listener to the form submission button
+private setupEventListeners() {
+    const form = document.getElementById('course-form') as HTMLFormElement;
+    const addBtn = document.getElementById('add') as HTMLButtonElement;
+    const clearBtn = document.getElementById('clear') as HTMLButtonElement;
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent default form submission behavior
+
+        // Retrieve form input values
+        const codeInput = document.getElementById('code') as HTMLInputElement;
+        const nameInput = document.getElementById('name') as HTMLInputElement;
+        const progressionInput = document.getElementById('progression') as HTMLSelectElement;
+        const syllabusInput = document.getElementById('syllabus') as HTMLInputElement;
+
+        // Create a new course object
+        const newCourse: CourseInfo = {
+            code: codeInput.value,
+            name: nameInput.value,
+            progression: progressionInput.value as 'A' | 'B' | 'C',
+            syllabus: syllabusInput.value
+        };
+        clearBtn.addEventListener('click', () => {
+            this.clearCourses();
+        });
+
+        
+    });
+
+}
+}
+new CourseManager();

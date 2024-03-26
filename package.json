@@ -8,7 +8,7 @@
     "build": "parcel build src/index.html --no-cache --no-source-maps",
     "sass": "sass --watch scss/main.scss:main.css",
     "transpile-js": "babel src -d dist --presets @babel/preset-env",
-    "minify-js": "terser dist/java1.js -o dist/java1.min.js && terser dist/java.js -o dist/java.min.js && terser dist/javaScript.js -o dist/javaScript.min.js",
+    "minify-js": " terser dist/javascript.js -o dist/javascript.min.js",
     "minify-html": "html-minifier --collapse-whitespace --remove-comments --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true --input-dir src --output-dir dist"
   },
   "author": "Dania",
@@ -16,11 +16,13 @@
   "dependencies": {
     "core-js": "^3.36.1",
     "gulp-cli": "^2.3.0",
+    "localStorage": "^1.0.4",
+    "node-localstorage": "^3.0.5",
     "typescript": "^5.4.3"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.12.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "parcel": "^2.12.0"
   }
 }
