@@ -1,1 +1,37 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/index.7019a7b7.css"><title>Course Management App</title></head><body> <div class="container"> <h1>App för kurshantering</h1> <form id="course-form"> <label for="code">Kurskod:</label> <input type="text" id="code" placeholder="ex. DT208G"><br> <label for="name">Kursnamn:</label> <input type="text" id="name" placeholder="ex. TypeScript"><br> <label for="progression">Progression:</label> <select id="progression" required> <option value="A">A</option> <option value="B">B</option> <option value="C">C</option> </select><br> <label for="syllabus">Kursplan URL:</label> <input type="text" id="syllabus" placeholder="ex. miun.se"><br> <button type="submit" id="add">Lägg till kurs</button> </form>  <h2>Kurser</h2> <ul id="course-list"></ul> <button id="clear">Rensa kurser</button> </div> <script src="/index.15f1970d.js" type="module"></script> </body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/index.b75cd83b.css">
+    <script src="/index.a4738760.js" defer=""></script>
+    <title>Course Management App</title>
+</head>
+<body>
+  <div class="container">
+    <h1>App för kurshantering</h1>
+    <form id="course-form">
+      <label for="code">Kurskod:</label>
+      <input type="text" id="code" placeholder="ex. DT208G"><br>
+      <label for="name">Kursnamn:</label>
+      <input type="text" id="name" placeholder="ex. TypeScript"><br>
+      <label for="progression">Progression:</label>
+      <select id="progression" required="">
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+      </select><br>
+      <label for="syllabus">Kursplan URL:</label>
+      <input type="text" id="syllabus" placeholder="ex. miun.se"><br>
+      <button type="submit" id="add">Lägg till kurs</button>
+  </form>
+  
+  <!-- List to display courses -->
+  <h2>Kurser</h2>
+  <ul id="course-list"></ul>
+  <button id="clear">Rensa kurser</button>
+  </div>
+   
+  
+</body>
+</html>

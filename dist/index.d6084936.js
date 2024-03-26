@@ -142,14 +142,14 @@
       this[globalName] = mainExports;
     }
   }
-})({"289J2":[function(require,module,exports) {
+})({"6vXZn":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "42036d7a98ade5a7";
 var HMR_USE_SSE = false;
-module.bundle.HMR_BUNDLE_ID = "04b55838a4738760";
+module.bundle.HMR_BUNDLE_ID = "254e2547d6084936";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, HMR_USE_SSE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -583,75 +583,42 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
     });
 }
 
-},{}],"4vxzy":[function(require,module,exports) {
-class CourseManager {
-    constructor(){
-        this.courses = [];
-        this.loadCoursesFromLocalStorage();
-        this.renderCourses();
-        const form = document.getElementById("course-form");
-        const clearBtn = document.getElementById("clear");
-        form.addEventListener("submit", (event)=>{
-            event.preventDefault(); // Prevent default form submission behavior
-            this.addCourse();
-        });
-        clearBtn.addEventListener("click", ()=>{
-            this.clearCourses();
-        });
+},{}],"gc6Ml":[function(require,module,exports) {
+const fs = require("59c0596033c69b06");
+class LocalStorage {
+    constructor(filePath){
+        this.filePath = filePath;
+        this.data = this.load();
     }
-    loadCoursesFromLocalStorage() {
-        const storedCourses = localStorage.getItem("courses");
-        if (storedCourses) this.courses = JSON.parse(storedCourses);
-    }
-    saveCoursesToLocalStorage() {
-        localStorage.setItem("courses", JSON.stringify(this.courses));
-    }
-    addCourse() {
-        const codeInput = document.getElementById("code");
-        const nameInput = document.getElementById("name");
-        const progressionInput = document.getElementById("progression");
-        const syllabusInput = document.getElementById("syllabus");
-        const newCourse = {
-            code: codeInput.value,
-            name: nameInput.value,
-            progression: progressionInput.value,
-            syllabus: syllabusInput.value
-        };
-        this.courses.push(newCourse);
-        this.saveCoursesToLocalStorage();
-        this.renderCourse(newCourse);
-        codeInput.value = "";
-        nameInput.value = "";
-        progressionInput.value = "A";
-        syllabusInput.value = "";
-    }
-    renderCourse(course) {
-        const kursInfo = document.getElementById("course-list");
-        if (kursInfo) {
-            const courseElement = document.createElement("div");
-            courseElement.classList.add("course");
-            courseElement.innerHTML = `
-                <p><strong>Kurskod:</strong> ${course.code}</p>
-                <p><strong>Kursnamn:</strong> ${course.name}</p>
-                <p><strong>Progression:</strong> ${course.progression}</p>
-                <p><strong>Webbsida:</strong> <a href="${course.syllabus}" target="_blank">${course.syllabus}</a></p>
-            `;
-            kursInfo.appendChild(courseElement);
+    load() {
+        try {
+            const data = fs.readFileSync(this.filePath, "utf-8");
+            return JSON.parse(data);
+        } catch (error) {
+            // If the file doesn't exist or there's an error reading it, return an empty object
+            return {};
         }
     }
-    renderCourses() {
-        this.courses.forEach((course)=>{
-            this.renderCourse(course);
-        });
+    save() {
+        fs.writeFileSync(this.filePath, JSON.stringify(this.data, null, 2));
     }
-    clearCourses() {
-        this.courses = [];
-        localStorage.removeItem("courses");
-        const kursInfo = document.getElementById("course-list");
-        if (kursInfo) kursInfo.innerHTML = "";
+    getItem(key) {
+        return this.data[key];
+    }
+    setItem(key, value) {
+        this.data[key] = value;
+        this.save();
+    }
+    removeItem(key) {
+        delete this.data[key];
+        this.save();
+    }
+    clear() {
+        this.data = {};
+        this.save();
     }
 }
-new CourseManager();
+module.exports = LocalStorage;
 
-},{}]},["289J2","4vxzy"], "4vxzy", "parcelRequiree6de")
+},{"59c0596033c69b06":"9C0N7"}]},["6vXZn","gc6Ml"], "gc6Ml", "parcelRequiree6de")
 
