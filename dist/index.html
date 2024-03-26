@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/index.b75cd83b.css">
+    <title>Course Management App</title>
+</head>
+<body>
+    <h1>Course Management App</h1>
+    <div id="courses-list"></div>
+    <form id="course-form">
+      <label for="code">Kurskod:</label>
+      <input type="text" id="code" placeholder="ex. DT208G" required=""><br>
+      <label for="name">Kursnamn:</label>
+      <input type="text" id="name" placeholder="ex. TypeScript" required=""><br>
+      <label for="progression">Progression:</label>
+      <select id="progression" required="">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+      </select><br>
+      <label for="syllabus">Kursplan URL:</label>
+      <input type="url" id="syllabus" placeholder="ex. miun.se" required=""><br>
+      <button type="submit">Lägg till kurs</button>
+    </form>
+    <!-- List to display courses -->
+    <h2>Kurser</h2>
+    <ul id="course-list"></ul>
+    <script src="/index.a4738760.js" defer=""></script>
+</body>
+</html>

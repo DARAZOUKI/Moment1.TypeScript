@@ -12,26 +12,18 @@ var CourseManager = /** @class */ (function () {
             { code: 'ENG202', name: 'English Literature', progression: 'B', syllabus: 'https://example.com/eng202-syllabus' }
         ];
     };
-    CourseManager.prototype.addCourse = function (newCourse) {
-        // Check if the course code already exists
-        var existingCourseIndex = -1;
-        for (var i = 0; i < this.courses.length; i++) {
-            if (this.courses[i].code === newCourse.code) {
-                existingCourseIndex = i;
-                break;
-            }
-        }
-        if (existingCourseIndex === -1) {
-            // Course code doesn't exist, add the new course
-            this.courses.push(newCourse);
-            // Render the updated courses
-            this.renderCourses();
-            // Optionally, update localStorage here
-            console.log('Course added:', newCourse);
-        }
-        else {
-            console.error('Course with code', newCourse.code, 'already exists.');
-        }
+    CourseManager.prototype.renderCourses = function () {
+        var _this = this;
+        var courseList = document.getElementById('course-list');
+        courseList.innerHTML = '';
+        this.courses.forEach(function (course) {
+            var listItem = document.createElement('li');
+            listItem.classList.add('course-item');
+            listItem.setAttribute('contenteditable', 'true');
+            listItem.innerHTML = "<strong>".concat(course.code, "</strong>: ").concat(course.name, " - Progression: ").concat(course.progression, " (<a href=\"").concat(course.syllabus, "\" target=\"_blank\">Syllabus</a>)");
+            listItem.addEventListener('input', function () { return _this.updateCourse(course, listItem.textContent); });
+            courseList.appendChild(listItem);
+        });
     };
     CourseManager.prototype.updateCourse = function (course, updatedInfo) {
         // Parse the updated course information
@@ -57,12 +49,6 @@ var CourseManager = /** @class */ (function () {
             console.error('Course with code', code, 'not found.');
         }
     };
-    CourseManager.prototype.renderCourses = function () {
-        console.log("Courses:");
-        this.courses.forEach(function (course) {
-            console.log("Code: ".concat(course.code, ", Name: ").concat(course.name, ", Progression: ").concat(course.progression, ", Syllabus: ").concat(course.syllabus));
-        });
-    };
     // Optional functionality: Sort courses by code
     CourseManager.prototype.sortCoursesByCode = function () {
         this.courses.sort(function (a, b) { return a.code.localeCompare(b.code); });
@@ -73,22 +59,23 @@ var CourseManager = /** @class */ (function () {
         var filteredCourses = this.courses.filter(function (course) { return course.progression === progression; });
         this.renderFilteredCourses(filteredCourses);
     };
+    // Render filtered courses
     CourseManager.prototype.renderFilteredCourses = function (filteredCourses) {
-        console.log("Filtered Courses:");
+        var _this = this;
+        var courseList = document.getElementById('course-list');
+        courseList.innerHTML = '';
         filteredCourses.forEach(function (course) {
-            console.log("Code: ".concat(course.code, ", Name: ").concat(course.name, ", Progression: ").concat(course.progression, ", Syllabus: ").concat(course.syllabus));
+            var listItem = document.createElement('li');
+            listItem.classList.add('course-item');
+            listItem.setAttribute('contenteditable', 'true');
+            listItem.innerHTML = "<strong>".concat(course.code, "</strong>: ").concat(course.name, " - Progression: ").concat(course.progression, " (<a href=\"").concat(course.syllabus, "\" target=\"_blank\">Syllabus</a>)");
+            listItem.addEventListener('input', function () { return _this.updateCourse(course, listItem.textContent); });
+            courseList.appendChild(listItem);
         });
     };
+    // Optional functionality: Delete course by code
     CourseManager.prototype.deleteCourseByCode = function (code) {
-        var index = -1;
-        // Find the index of the course with the specified code
-        for (var i = 0; i < this.courses.length; i++) {
-            if (this.courses[i].code === code) {
-                index = i;
-                break;
-            }
-        }
-        // If the course with the specified code is found, delete it
+        var index = this.courses.findIndex(function (course) { return course.code === code; });
         if (index !== -1) {
             this.courses.splice(index, 1);
             this.renderCourses();
