@@ -9,9 +9,6 @@ interface Storage {
 
 declare var localStorage: Storage;
 
-
-
-
 interface CourseInfo {
     code: string;
     name: string;
@@ -37,6 +34,11 @@ class CourseManager {
 
         clearBtn.addEventListener('click', () => {
             this.clearCourses();
+        });
+
+        const updateBtn = document.getElementById('update-btn') as HTMLButtonElement;
+        updateBtn.addEventListener('click', () => {
+            this.handleUpdate();
         });
     }
 
@@ -79,12 +81,7 @@ class CourseManager {
     }
 
     private isCourseCodeUnique(code: string): boolean {
-        for (const course of this.courses) {
-            if (course.code === code) {
-                return false; // Code already exists
-            }
-        }
-        return true; // Code is unique
+        return !this.courses.some(course => course.code === code);
     }
 
     private renderCourse(course: CourseInfo) {
@@ -118,6 +115,37 @@ class CourseManager {
         const kursInfo = document.getElementById('course-list');
         if (kursInfo) {
             kursInfo.innerHTML = ''; // Clear displayed courses
+        }
+    }
+
+    private handleUpdate() {
+        const updateCodeInput = (document.getElementById('update-code') as HTMLInputElement).value.trim();
+        const updatedNameInput = (document.getElementById('update-name') as HTMLInputElement).value.trim();
+        const updatedProgressionInput = (document.getElementById('update-progression') as HTMLSelectElement).value.trim();
+        const updatedSyllabusInput = (document.getElementById('update-syllabus') as HTMLInputElement).value.trim();
+
+        let updated = false;
+
+        for (let i = 0; i < this.courses.length; i++) {
+            if (this.courses[i].code === updateCodeInput) {
+                this.courses[i].name = updatedNameInput;
+                this.courses[i].progression = updatedProgressionInput;
+                this.courses[i].syllabus = updatedSyllabusInput;
+                updated = true;
+                break;
+            }
+        }
+
+        if (updated) {
+            this.saveCoursesToLocalStorage();
+            this.renderCourses();
+            // Clear update form inputs
+            (document.getElementById('update-code') as HTMLInputElement).value = '';
+            (document.getElementById('update-name') as HTMLInputElement).value = '';
+            (document.getElementById('update-progression') as HTMLSelectElement).value = 'A';
+            (document.getElementById('update-syllabus') as HTMLInputElement).value = '';
+        } else {
+            console.log(`Course with code ${updateCodeInput} not found.`);
         }
     }
 }

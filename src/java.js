@@ -13,6 +13,10 @@ var CourseManager = /** @class */ (function () {
         clearBtn.addEventListener('click', function () {
             _this.clearCourses();
         });
+        var updateBtn = document.getElementById('update-btn');
+        updateBtn.addEventListener('click', function () {
+            _this.handleUpdate();
+        });
     }
     CourseManager.prototype.loadCoursesFromLocalStorage = function () {
         var storedCourses = localStorage.getItem('courses');
@@ -49,13 +53,7 @@ var CourseManager = /** @class */ (function () {
         }
     };
     CourseManager.prototype.isCourseCodeUnique = function (code) {
-        for (var _i = 0, _a = this.courses; _i < _a.length; _i++) {
-            var course = _a[_i];
-            if (course.code === code) {
-                return false; // Code already exists
-            }
-        }
-        return true; // Code is unique
+        return !this.courses.some(function (course) { return course.code === code; });
     };
     CourseManager.prototype.renderCourse = function (course) {
         var kursInfo = document.getElementById('course-list');
@@ -82,6 +80,34 @@ var CourseManager = /** @class */ (function () {
         var kursInfo = document.getElementById('course-list');
         if (kursInfo) {
             kursInfo.innerHTML = ''; // Clear displayed courses
+        }
+    };
+    CourseManager.prototype.handleUpdate = function () {
+        var updateCodeInput = document.getElementById('update-code').value.trim();
+        var updatedNameInput = document.getElementById('update-name').value.trim();
+        var updatedProgressionInput = document.getElementById('update-progression').value.trim();
+        var updatedSyllabusInput = document.getElementById('update-syllabus').value.trim();
+        var updated = false;
+        for (var i = 0; i < this.courses.length; i++) {
+            if (this.courses[i].code === updateCodeInput) {
+                this.courses[i].name = updatedNameInput;
+                this.courses[i].progression = updatedProgressionInput;
+                this.courses[i].syllabus = updatedSyllabusInput;
+                updated = true;
+                break;
+            }
+        }
+        if (updated) {
+            this.saveCoursesToLocalStorage();
+            this.renderCourses();
+            // Clear update form inputs
+            document.getElementById('update-code').value = '';
+            document.getElementById('update-name').value = '';
+            document.getElementById('update-progression').value = 'A';
+            document.getElementById('update-syllabus').value = '';
+        }
+        else {
+            console.log("Course with code ".concat(updateCodeInput, " not found."));
         }
     };
     return CourseManager;
