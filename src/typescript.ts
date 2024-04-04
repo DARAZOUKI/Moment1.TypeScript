@@ -1,3 +1,17 @@
+interface Storage {
+    getItem(key: string): string | null;
+    setItem(key: string, value: string): void;
+    removeItem(key: string): void;
+    clear(): void;
+    readonly length: number;
+    key(index: number): string | null;
+}
+
+declare var localStorage: Storage;
+
+
+
+
 interface CourseInfo {
     code: string;
     name: string;
@@ -18,7 +32,7 @@ class CourseManager {
 
         form.addEventListener('submit', (event) => {
             event.preventDefault(); // Prevent default form submission behavior
-            this.addCourse();
+            this.handleFormSubmit();
         });
 
         clearBtn.addEventListener('click', () => {
@@ -37,27 +51,40 @@ class CourseManager {
         localStorage.setItem('courses', JSON.stringify(this.courses));
     }
 
-    private addCourse() {
-        const codeInput = document.getElementById('code') as HTMLInputElement;
-        const nameInput = document.getElementById('name') as HTMLInputElement;
-        const progressionInput = document.getElementById('progression') as HTMLSelectElement;
-        const syllabusInput = document.getElementById('syllabus') as HTMLInputElement;
+    private handleFormSubmit() {
+        const codeInput = (document.getElementById('code') as HTMLInputElement).value.trim();
+        const nameInput = (document.getElementById('name') as HTMLInputElement).value.trim();
+        const progressionInput = (document.getElementById('progression') as HTMLSelectElement).value.trim();
+        const syllabusInput = (document.getElementById('syllabus') as HTMLInputElement).value.trim();
 
-        const newCourse: CourseInfo = {
-            code: codeInput.value,
-            name: nameInput.value,
-            progression: progressionInput.value,
-            syllabus: syllabusInput.value
-        };
+        if (this.isCourseCodeUnique(codeInput)) {
+            const newCourse: CourseInfo = {
+                code: codeInput,
+                name: nameInput,
+                progression: progressionInput,
+                syllabus: syllabusInput
+            };
+            this.courses.push(newCourse);
+            this.saveCoursesToLocalStorage();
+            this.renderCourses();
 
-        this.courses.push(newCourse);
-        this.saveCoursesToLocalStorage();
-        this.renderCourse(newCourse);
+            // Clear form inputs
+            (document.getElementById('code') as HTMLInputElement).value = '';
+            (document.getElementById('name') as HTMLInputElement).value = '';
+            (document.getElementById('progression') as HTMLSelectElement).value = 'A';
+            (document.getElementById('syllabus') as HTMLInputElement).value = '';
+        } else {
+            alert('A course with the same code already exists. Please enter a unique code.');
+        }
+    }
 
-        codeInput.value = '';
-        nameInput.value = '';
-        progressionInput.value = 'A';
-        syllabusInput.value = '';
+    private isCourseCodeUnique(code: string): boolean {
+        for (const course of this.courses) {
+            if (course.code === code) {
+                return false; // Code already exists
+            }
+        }
+        return true; // Code is unique
     }
 
     private renderCourse(course: CourseInfo) {
@@ -76,9 +103,13 @@ class CourseManager {
     }
 
     private renderCourses() {
-        this.courses.forEach(course => {
-            this.renderCourse(course);
-        });
+        const kursInfo = document.getElementById('course-list');
+        if (kursInfo) {
+            kursInfo.innerHTML = ''; // Clear existing courses
+            this.courses.forEach(course => {
+                this.renderCourse(course);
+            });
+        }
     }
 
     private clearCourses() {
@@ -86,7 +117,7 @@ class CourseManager {
         localStorage.removeItem('courses');
         const kursInfo = document.getElementById('course-list');
         if (kursInfo) {
-            kursInfo.innerHTML = '';
+            kursInfo.innerHTML = ''; // Clear displayed courses
         }
     }
 }

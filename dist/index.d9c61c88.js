@@ -142,14 +142,14 @@
       this[globalName] = mainExports;
     }
   }
-})({"289J2":[function(require,module,exports) {
+})({"bNCnv":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "42036d7a98ade5a7";
 var HMR_USE_SSE = false;
-module.bundle.HMR_BUNDLE_ID = "04b55838a4738760";
+module.bundle.HMR_BUNDLE_ID = "961d4577d9c61c88";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, HMR_USE_SSE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -583,7 +583,7 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
     });
 }
 
-},{}],"4vxzy":[function(require,module,exports) {
+},{}],"8iAxt":[function(require,module,exports) {
 var CourseManager = /** @class */ function() {
     function CourseManager() {
         var _this = this;
@@ -665,5 +665,5 @@ var CourseManager = /** @class */ function() {
 }();
 new CourseManager();
 
-},{}]},["289J2","4vxzy"], "4vxzy", "parcelRequiree6de")
+},{}]},["bNCnv","8iAxt"], "8iAxt", "parcelRequiree6de")
 
